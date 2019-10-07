@@ -1,0 +1,110 @@
+#include "math.h"
+#include <vector>
+#include <cmath>
+
+using std::cout;
+using std::endl;
+using std::vector;
+
+// Realize a function to calculate data entropy
+double getDataEntropy(const vector<double>& probabilities) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < probabilities.size(); ++i) {
+        result -= probabilities[i] * log(probabilities[i]) / log(2.0);
+    }
+    return result;
+}
+
+// get KL
+double getKL(const vector<double>& p_prob, const vector<double>& q_prob) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < p_prob.size(); ++i) {
+        result += p_prob[i] * log(p_prob[i]/ q_prob[i]) / log(2.0);
+    }
+
+    return result;
+}
+
+// get mean value
+double getMeanValue(const vector<double>& value_vector) {
+    double result = 0.0;
+    if (0 == value_vector.size()) {
+        return result;
+    }
+
+    for (unsigned int i = 0; i < value_vector.size(); ++i) {
+        result += value_vector[i];
+    }
+
+    return result / double(value_vector.size());
+}
+
+// get sum of two array's square
+double getSumOfSquare(const vector<double>& value_vector1, const vector<double>& value_vector2) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < value_vector1.size(); ++i) {
+        result += double(pow((value_vector1[i] - value_vector2[i]), 2));
+    }
+
+    return result;
+}
+
+// get sum of one array's square
+double getSumOfSquare(const vector<double>& value_vector) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < value_vector.size(); ++i) {
+        result += double(pow(value_vector[i], 2));
+    }
+
+    return result;
+}
+
+// get sum of one array
+double getSum(const vector<double>& value_vector) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < value_vector.size(); ++i) {
+        result += value_vector[i];
+    }
+
+    return result;
+}
+
+// get vector multiplication
+double getVectorMul(const vector<double>& value_vector1, const vector<double>& value_vector2) {
+    double result = 0.0;
+    for (unsigned int i = 0; i < value_vector1.size(); ++i) {
+        result += value_vector1[i] * value_vector2[i];
+    }
+
+    return result;
+}
+
+int main(){
+    /*vector<double> input_vector = {0.5,0.5};*/
+    vector<double> input_p = {0.02, 0.03, 0.05, 0.14, 0.16, 0.15, 0.12, 0.08, 0.1, 0.08, 0.07};
+    vector<double> input_q = { 0.0004, 0.0046, 0.0249, 0.0792, 0.1653, 0.2367, 0.2353, 0.1604, 0.0718, 0.019, 0.0023 };
+    //cout << getDataEntropy(input_q) << endl;
+    //vector<double> input_q(11, 0.0909090909);
+
+    cout << getKL(input_p, input_q) << endl;
+    
+    vector<double> value_vector = {10.2, 10.3, 9.8, 9.9, 9.8};
+    cout << getMeanValue(value_vector) << endl;
+
+    vector<double> value_vector2(5, 10.0);
+    cout << getSumOfSquare(value_vector, value_vector2) << endl;
+    
+    vector<double> value_vector3 = { 25,27,31,33,35 };
+    cout << getSumOfSquare(value_vector3) << endl;
+
+    cout << getSum(value_vector3) << endl;
+
+    vector<double> value_vector4 = { 110, 115, 155, 160, 180 };
+    cout << getVectorMul(value_vector3, value_vector4) << endl;
+
+    cout << getSum(value_vector4) << endl;
+
+    system("pause");
+
+    return 1;
+}
